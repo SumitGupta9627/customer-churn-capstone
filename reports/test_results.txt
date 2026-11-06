@@ -1,0 +1,21 @@
+test_health (test_api.TestAPI.test_health) ... ok
+test_home_page_loads (test_api.TestAPI.test_home_page_loads) ... ok
+test_predict_bad_input_returns_400 (test_api.TestAPI.test_predict_bad_input_returns_400) ... ok
+test_predict_non_json_returns_400 (test_api.TestAPI.test_predict_non_json_returns_400) ... ok
+test_predict_ok (test_api.TestAPI.test_predict_ok) ... ok
+test_no_flags_means_zero_benefit (test_business.TestBusiness.test_no_flags_means_zero_benefit) ... ok
+test_simple_example (test_business.TestBusiness.test_simple_example) ... ok
+test_add_features_keeps_input_and_handles_zero_tenure (test_data.TestData.test_add_features_keeps_input_and_handles_zero_tenure) ... ok
+test_data_loads_and_passes_quality_checks (test_data.TestData.test_data_loads_and_passes_quality_checks) ... ok
+test_validate_detects_missing_values (test_data.TestData.test_validate_detects_missing_values) ... ok
+test_high_and_low_risk_customers (test_model.TestModel.test_high_and_low_risk_customers) ... ok
+test_invalid_inputs_are_rejected (test_model.TestModel.test_invalid_inputs_are_rejected) ... ok
+test_metrics_meet_quality_bar (test_model.TestModel.test_metrics_meet_quality_bar) ... ok
+test_missing_field_is_rejected (test_model.TestModel.test_missing_field_is_rejected) ... ok
+test_model_file_exists (test_model.TestModel.test_model_file_exists) ... ok
+test_probability_is_between_0_and_1 (test_model.TestModel.test_probability_is_between_0_and_1) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.127s
+
+OK

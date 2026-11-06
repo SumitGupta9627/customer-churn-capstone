@@ -1,0 +1,14 @@
+{
+  "customers": 500,
+  "actual_churners": 53,
+  "customers_flagged": 81,
+  "churners_caught": 53,
+  "annual_revenue_at_risk": 82536.0,
+  "campaign_cost": 11444.4,
+  "revenue_saved": 24760.8,
+  "net_benefit": 13316.4,
+  "assumptions": {
+    "offer_cost_rate": 0.1,
+    "save_rate": 0.3
+  }
+}

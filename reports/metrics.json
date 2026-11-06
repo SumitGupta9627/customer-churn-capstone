@@ -1,0 +1,50 @@
+{
+  "accuracy": 0.93,
+  "precision": 0.6111111111111112,
+  "recall": 1.0,
+  "f1": 0.7586206896551724,
+  "roc_auc": 0.9969356486210418,
+  "confusion_matrix": [
+    [
+      82,
+      7
+    ],
+    [
+      0,
+      11
+    ]
+  ],
+  "best_params": {
+    "model__max_depth": 3,
+    "model__min_samples_leaf": 5,
+    "model__n_estimators": 300
+  },
+  "cv_comparison": {
+    "Logistic Regression": {
+      "cv_auc_mean": 0.9922143974960876,
+      "cv_auc_std": 0.004622800917958274
+    },
+    "Random Forest": {
+      "cv_auc_mean": 0.9927719092331768,
+      "cv_auc_std": 0.003830027852080086
+    },
+    "Gradient Boosting": {
+      "cv_auc_mean": 0.9939847417840376,
+      "cv_auc_std": 0.006003736723542227
+    }
+  },
+  "best_cv_auc": 0.9933978873239436,
+  "train_rows": 400,
+  "test_rows": 100,
+  "data_quality": {
+    "rows": 500,
+    "columns": 9,
+    "missing_columns": [],
+    "missing_values": 0,
+    "duplicate_rows": 0,
+    "duplicate_ids": 0,
+    "churn_rate": 0.106,
+    "negative_numeric_values": 0,
+    "passed": true
+  }
+}

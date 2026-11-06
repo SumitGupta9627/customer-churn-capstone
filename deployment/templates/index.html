@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Churn Predictor</title>
+<style>
+  :root { --green:#0B6E4F; --bg:#F4F7F5; --ink:#1B2B25; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Segoe UI,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  header { background:var(--green); color:#fff; padding:20px 28px; }
+  header h1 { margin:0; font-size:1.5rem; }
+  header p { margin:4px 0 0; opacity:.85; }
+  main { max-width:860px; margin:24px auto; padding:0 16px; display:grid; gap:20px; grid-template-columns:1fr 1fr; }
+  @media (max-width:720px){ main{ grid-template-columns:1fr; } }
+  .card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  label { display:block; margin:10px 0 4px; font-weight:600; font-size:.9rem; }
+  input, select { width:100%; padding:9px; border:1px solid #C8D3CD; border-radius:8px; font-size:1rem; }
+  button { margin-top:16px; width:100%; padding:11px; background:var(--green); color:#fff; border:0; border-radius:8px; font-size:1rem; cursor:pointer; }
+  button:hover { filter:brightness(1.1); }
+  #result { text-align:center; }
+  .badge { display:inline-block; padding:6px 16px; border-radius:20px; color:#fff; font-weight:700; margin:8px 0; }
+  .Low { background:#2E9E5B; } .Medium { background:#E0A100; } .High { background:#D64545; }
+  .big { font-size:2.6rem; font-weight:700; }
+  .err { color:#D64545; font-weight:600; }
+  .muted { color:#6B7B73; font-size:.9rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Customer Churn Predictor</h1>
+  <p>Enter a customer's details to estimate the chance they will leave.</p>
+</header>
+<main>
+  <section class="card">
+    <label for="Tenure">Tenure (months)</label>
+    <input id="Tenure" type="number" min="0" value="6">
+    <label for="MonthlyCharges">Monthly charges</label>
+    <input id="MonthlyCharges" type="number" min="0" step="0.01" value="120">
+    <label for="TotalCharges">Total charges</label>
+    <input id="TotalCharges" type="number" min="0" step="0.01" value="720">
+    <label for="Contract">Contract</label>
+    <select id="Contract">{% for c in contracts %}<option>{{ c }}</option>{% endfor %}</select>
+    <label for="PaymentMethod">Payment method</label>
+    <select id="PaymentMethod">{% for p in payments %}<option>{{ p }}</option>{% endfor %}</select>
+    <label for="PaperlessBilling">Paperless billing</label>
+    <select id="PaperlessBilling"><option>Yes</option><option>No</option></select>
+    <label for="SeniorCitizen">Senior citizen</label>
+    <select id="SeniorCitizen"><option value="0">No</option><option value="1">Yes</option></select>
+    <button id="go" type="button">Predict churn risk</button>
+  </section>
+  <section class="card" id="result">
+    <p class="muted">Your prediction will appear here.</p>
+  </section>
+</main>
+<script>
+const ids = ["Tenure","MonthlyCharges","TotalCharges","Contract","PaymentMethod","PaperlessBilling","SeniorCitizen"];
+document.getElementById("go").addEventListener("click", async () => {
+  const body = {};
+  ids.forEach(id => body[id] = document.getElementById(id).value);
+  const box = document.getElementById("result");
+  try {
+    const res = await fetch("/predict", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+    const data = await res.json();
+    if (!res.ok) { box.innerHTML = '<p class="err">' + data.error + '</p>'; return; }
+    const pct = (data.churn_probability * 100).toFixed(1);
+    const advice = {High:"Act now: offer a retention deal or a contract upgrade.",
+                    Medium:"Monitor: send a check-in or small loyalty offer.",
+                    Low:"Healthy: no action needed."}[data.risk_level];
+    box.innerHTML = '<p class="muted">Churn probability</p><div class="big">' + pct + '%</div>' +
+      '<span class="badge ' + data.risk_level + '">' + data.risk_level + ' risk</span>' +
+      '<p>' + advice + '</p>';
+  } catch (e) {
+    box.innerHTML = '<p class="err">Could not reach the server.</p>';
+  }
+});
+</script>
+</body>
+</html>
